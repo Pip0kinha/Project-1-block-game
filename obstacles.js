@@ -5,7 +5,7 @@ class Obstacles {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.speedX = 2;
+        this.speedX = 1;
         this.speedY = 1;
         this.img = new Image();
     }

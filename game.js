@@ -10,7 +10,9 @@ class Game {
     this.player = null;
     this.controls = null;
     this.obstaclesArray = [];
+    this.firstObstacle = new Obstacles(this, Math.floor(Math.random() * 900), 0, 30, 30, 3, 3)
     this.frames = 0;
+    this.newObsSound = new Audio("/docs/assets/sounds/new_obstacle.wav");
   }
 
   start() {
@@ -19,13 +21,13 @@ class Game {
     this.player.draw();
     this.controls = new Controls(this);
     this.controls.keyboardEvents();
+    this.firstObstacle.drawObstacle()
     this.intervalId = setInterval(() => {
       this.update();
     }, 1000 / 60);
   }
 
   update() {
-    let newObsSound = new Audio("/docs/assets/sounds/new_obstacle.wav");
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.frames++;
     this.drawBackground();
@@ -34,7 +36,7 @@ class Game {
     this.player.draw();
     if (this.frames % 300 === 0) {
       this.createRandomObstacle();
-      newObsSound.play();
+      this.newObsSound.play();
     }
     this.obstaclesArray.forEach((obstacle) => {
       obstacle.x += obstacle.speedX;
@@ -129,9 +131,15 @@ class Game {
     this.ctx.fillRect(0, 0, 1200, 600);
   }
   drawGameOver() {
-    this.ctx.font = "25x  pixel";
+   /*  this.ctx.font = "25x  pixel";
     this.ctx.fillStyle = "grey";
-    this.ctx.fillText(`Game Over`, 970, 113);
+    this.ctx.fillText(`Game Over`, 970, 113); */
+    
+    this.ctx.fillStyle = 'light grey';
+    this.ctx.fillRect(200, 150, 500, 300);
+    this.ctx.font = "250x  pixel";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText(`Game Over`, 350, 300);
   }
 }
 
