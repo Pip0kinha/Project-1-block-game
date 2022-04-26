@@ -84,3 +84,7 @@ body {
   background-position: 100%;
   /* filter: opacity(0.8); */
 }
+
+#canvas {
+  background-image: url(/docs/assets/imgs/pexels-photo-255379.webp);
+}

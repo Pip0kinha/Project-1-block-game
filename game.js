@@ -25,6 +25,7 @@ class Game {
   }
 
   update() {
+    let newObsSound = new Audio("/docs/assets/sounds/new_obstacle.wav");
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.frames++;
     this.drawBackground();
@@ -33,6 +34,7 @@ class Game {
     this.player.draw();
     if (this.frames % 300 === 0) {
       this.createRandomObstacle();
+      newObsSound.play();
     }
     this.obstaclesArray.forEach((obstacle) => {
       obstacle.x += obstacle.speedX;
@@ -89,6 +91,7 @@ class Game {
   }
 
   checkGameOver() {
+    let gameOverSound = new Audio("/docs/assets/sounds/game-over.wav");
     const player1 = this.player;
     const crashed = this.obstaclesArray.some(function (obstacle) {
       return player1.crashWith(obstacle);
@@ -97,6 +100,7 @@ class Game {
     if (crashed) {
       this.stop();
       this.drawGameOver();
+      gameOverSound.play();
     }
   }
 
@@ -130,4 +134,5 @@ class Game {
     this.ctx.fillText(`Game Over`, 970, 113);
   }
 }
+
 
