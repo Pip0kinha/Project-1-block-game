@@ -4,7 +4,7 @@ class Game {
     this.ctx = this.canvas.getContext("2d");
     this.x = 0;
     this.y = 0;
-    this.width = 900;
+    this.width = 1200;
     this.height = 600;
     this.intervalId = null;
     this.player = null;
@@ -14,6 +14,7 @@ class Game {
   }
 
   start() {
+    this.drawLine();
     this.player = new Player(this, 390, 240, 120, 120);
     this.player.draw();
     this.controls = new Controls(this);
@@ -26,6 +27,8 @@ class Game {
   update() {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.frames++;
+    this.drawBackground();
+    this.drawLine();
     this.drawScores();
     this.player.draw();
     if (this.frames % 300 === 0) {
@@ -35,13 +38,13 @@ class Game {
       obstacle.x += obstacle.speedX;
       obstacle.y += obstacle.speedY;
       if (
-        obstacle.y + obstacle.speedY > 600 ||
+        obstacle.y + obstacle.speedY > 540 ||
         obstacle.y + obstacle.speedY < 0
       ) {
         obstacle.speedY *= -1;
       }
       if (
-        obstacle.x + obstacle.speedX > 900 ||
+        obstacle.x + obstacle.speedX > 840 ||
         obstacle.x + obstacle.speedX < 0
       ) {
         obstacle.speedX *= -1;
@@ -49,14 +52,13 @@ class Game {
       obstacle.drawObstacle();
     });
     this.obstaclesArray.forEach((obstacle) => {
-      obstacle.drawObstacle()
+      obstacle.drawObstacle();
     });
     this.checkGameOver();
-  
   }
   createObstacleTop = () => {
     let randomX = Math.floor(Math.random() * 900);
-    this.obstaclesArray.push(new Obstacles(this, randomX, 0, 60, 60, 3, 3));
+    this.obstaclesArray.push(new Obstacles(this, randomX, 0, 30, 30, 3, 3));
   };
 
   createObstacleBottom = () => {
@@ -66,12 +68,12 @@ class Game {
 
   createObstacleLeft = () => {
     let randomY = Math.floor(Math.random() * 600);
-    this.obstaclesArray.push(new Obstacles(this, 0, randomY, 60, 60, 3, 3));
+    this.obstaclesArray.push(new Obstacles(this, 0, randomY, 20, 20, 3, 3));
   };
 
   createObstacleRight = () => {
     let randomY = Math.floor(Math.random() * 600);
-    this.obstaclesArray.push(new Obstacles(this, 840, randomY, 60, 60, 3, 3));
+    this.obstaclesArray.push(new Obstacles(this, 840, randomY, 80, 80, 3, 3));
   };
 
   createRandomObstacle() {
@@ -87,13 +89,14 @@ class Game {
   }
 
   checkGameOver() {
-    const player1 = this.player
-    const crashed = this.obstaclesArray.some (function (obstacle) {
+    const player1 = this.player;
+    const crashed = this.obstaclesArray.some(function (obstacle) {
       return player1.crashWith(obstacle);
     });
 
     if (crashed) {
       this.stop();
+      this.drawGameOver();
     }
   }
 
@@ -103,8 +106,28 @@ class Game {
 
   drawScores() {
     let score = Math.floor(this.frames / 60);
-    this.ctx.font = "32px serif";
-    this.ctx.fillStyle = "black";
-    this.ctx.fillText(`Score: ${score}`, 390, 33);
+    this.ctx.font = "20px  pixel";
+    this.ctx.fillStyle = "grey";
+    this.ctx.fillText(`Score:${score}`, 980, 53);
+  }
+
+  drawLine() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(908, 0);
+    this.ctx.lineTo(908, 600);
+    this.ctx.lineWidth = 2;
+    this.ctx.strokeStyle = "grey";
+    this.ctx.stroke();
+    this.ctx.closePath();
+  }
+   drawBackground() {
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillRect(0, 0, 1200, 600);
+  }
+  drawGameOver() {
+    this.ctx.font = "25x  pixel";
+    this.ctx.fillStyle = "grey";
+    this.ctx.fillText(`Game Over`, 970, 113);
   }
 }
+
