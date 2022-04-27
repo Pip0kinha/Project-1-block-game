@@ -88,3 +88,20 @@ body {
 #canvas {
   background-image: url(/docs/assets/imgs/instructions.jpg);
 }
+
+h2{
+    font-family: "pixel",monospace;
+    color: grey;
+    text-transform: uppercase;
+    text-align:left;
+    margin: 40px;
+    font-size: 20px;
+}
+
+#highScores {
+    font-family: "pixel",monospace;
+    color: grey;
+    text-align:left;
+    margin: 40px;
+    font-size: 20px;
+}
