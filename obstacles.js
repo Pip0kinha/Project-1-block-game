@@ -11,7 +11,7 @@ class Obstacles {
     }
 
     drawObstacle() {
-        this.img.src = "./docs/assets/imgs/obstacle.png";
+        this.img.src = "docs/assets/imgs/obstacle.png";
         this.game.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
       }
 

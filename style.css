@@ -1,7 +1,7 @@
 
 @font-face {
   font-family: "pixel";
-  src: url(/docs/assets/fonts/dogica.ttf);
+  src: url(docs/assets/fonts/dogica.ttf);
 }
 
 .button-30 {
@@ -104,4 +104,9 @@ h2{
     text-align:left;
     margin: 40px;
     font-size: 20px;
+}
+
+.div-leaderboard {
+  background-color: white;
+  padding: 20px;
 }

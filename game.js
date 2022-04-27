@@ -16,8 +16,8 @@ class Game {
     img.addEventListener("load", () => {
       this.img = img;
     });
-    img.src = "./docs/assets/imgs/game_over.jpg";
-    this.newObsSound = new Audio("/docs/assets/sounds/new_obstacle.wav");
+    img.src = "docs/assets/imgs/game_over.jpg";
+    this.newObsSound = new Audio("docs/assets/sounds/new_obstacle.wav");
   }
 
   start() {
@@ -26,7 +26,7 @@ class Game {
     this.player.draw();
     this.controls = new Controls(this);
     this.controls.keyboardEvents();
-    this.createRandomObstacle()
+    this.createRandomObstacle();
     this.intervalId = setInterval(() => {
       this.update();
     }, 1000 / 60);
@@ -35,7 +35,7 @@ class Game {
   update() {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.frames++;
-    this.score = Math.floor(this.frames / 60)
+    this.score = Math.floor(this.frames / 60);
     this.drawBackground();
     this.drawLine();
     this.drawScores();
@@ -99,7 +99,7 @@ class Game {
   }
 
   checkGameOver() {
-    let gameOverSound = new Audio("/docs/assets/sounds/game-over.wav");
+    let gameOverSound = new Audio("docs/assets/sounds/game-over.wav");
     const player1 = this.player;
     const crashed = this.obstaclesArray.some(function (obstacle) {
       return player1.crashWith(obstacle);
@@ -109,7 +109,7 @@ class Game {
       this.stop();
       this.drawGameOver();
       gameOverSound.play();
-     this.checkHighScore(); 
+      this.checkHighScore();
     }
   }
 
@@ -118,7 +118,6 @@ class Game {
   }
 
   drawScores() {
-   
     this.ctx.font = "20px  pixel";
     this.ctx.fillStyle = "grey";
     this.ctx.fillText(`Score:${this.score}`, 980, 53);
@@ -148,57 +147,53 @@ class Game {
     this.ctx.fillStyle = "white";
     this.ctx.fillText(`Game Over`, 350, 300); */
     //this.ctx.src = "./docs/assets/imgs/game_over.jpg";
-   /*  const image = new Image();
+    /*  const image = new Image();
     image.src = "./docs/assets/imgs/game_over.jpg"; */
     this.ctx.drawImage(this.img, 100, 150, 1000, 300);
   }
-  checkHighScore(){
-    console.log("test")
+  checkHighScore() {
     const NO_OF_HIGH_SCORES = 10;
-    const HIGH_SCORES = 'highScores';
+    const HIGH_SCORES = "highScores";
     const highScoreString = localStorage.getItem(HIGH_SCORES);
-    let lowestScore = 0
+    let lowestScore = 0;
     let highScores = [];
-console.log(highScoreString)
-    if(highScoreString){
+    if (highScoreString) {
       highScores = JSON.parse(highScoreString);
-      console.log(highScores)
+
       lowestScore = highScores[highScores.length - 1].score;
     }
-  console.log(lowestScore)
-  console.log(this.score)
+
     if (this.score > lowestScore) {
-      this.saveHighScore(this.score, highScores); 
+      this.saveHighScore(this.score, highScores);
       this.showHighScores();
-      console.log("hello")
     }
   }
-  saveHighScore(score, highScores){
+  saveHighScore(score, highScores) {
     const NO_OF_HIGH_SCORES = 10;
-    const HIGH_SCORES = 'highScores';
+    const HIGH_SCORES = "highScores";
     const name = prompt(`You got a highscore! Enter name:`);
-    const newScore = {score, name };
-    
+    const newScore = { score, name };
+
     // 1. Add to list
     highScores.push(newScore);
-  
+
     // 2. Sort the list
-    highScores.sort((a, b) => b.score - a.score);
-    
+    highScores.sort((a, b) => b.score - a.score);
+
     // 3. Select new list
     highScores.splice(NO_OF_HIGH_SCORES);
-    
+
     // 4. Save to local storage
     localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
   }
-  showHighScores(){
+  showHighScores() {
     const NO_OF_HIGH_SCORES = 10;
-    const HIGH_SCORES = 'highScores';
+    const HIGH_SCORES = "highScores";
     const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES));
     const highScoreList = document.getElementById("highScores");
-  
+
     highScoreList.innerHTML = highScores
-    .map((score) => `<li>${score.score} - ${score.name}`)
-    .join('');
+      .map((score) => `<li>${score.score} - ${score.name}`)
+      .join("");
   }
 }
