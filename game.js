@@ -10,7 +10,15 @@ class Game {
     this.player = null;
     this.controls = null;
     this.obstaclesArray = [];
-    this.firstObstacle = new Obstacles(this, Math.floor(Math.random() * 900), 0, 30, 30, 3, 3)
+    this.firstObstacle = new Obstacles(
+      this,
+      Math.floor(Math.random() * 900),
+      0,
+      30,
+      30,
+      3,
+      3
+    );
     this.frames = 0;
     this.newObsSound = new Audio("/docs/assets/sounds/new_obstacle.wav");
   }
@@ -21,7 +29,7 @@ class Game {
     this.player.draw();
     this.controls = new Controls(this);
     this.controls.keyboardEvents();
-    this.firstObstacle.drawObstacle()
+    this.firstObstacle.drawObstacle();
     this.intervalId = setInterval(() => {
       this.update();
     }, 1000 / 60);
@@ -126,21 +134,23 @@ class Game {
     this.ctx.stroke();
     this.ctx.closePath();
   }
-   drawBackground() {
-    this.ctx.fillStyle = 'white';
+  drawBackground() {
+    this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, 0, 1200, 600);
   }
   drawGameOver() {
-   /*  this.ctx.font = "25x  pixel";
+    /*  this.ctx.font = "25x  pixel";
     this.ctx.fillStyle = "grey";
     this.ctx.fillText(`Game Over`, 970, 113); */
-    
-    this.ctx.fillStyle = 'light grey';
+
+    /* this.ctx.fillStyle = 'light grey';
     this.ctx.fillRect(200, 150, 500, 300);
     this.ctx.font = "250x  pixel";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(`Game Over`, 350, 300);
+    this.ctx.fillText(`Game Over`, 350, 300); */
+    //this.ctx.src = "./docs/assets/imgs/game_over.jpg";
+    const image = new Image();
+    image.src = "./docs/assets/imgs/game_over.jpg";
+    this.ctx.drawImage(image, 200, 150);
   }
 }
-
-
