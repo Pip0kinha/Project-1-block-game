@@ -120,7 +120,6 @@ class Game {
       this.starGameMusic.pause();
       /* if (!this.starGameMusic.paused) */ gameOverSound.play();
       this.checkHighScore();
-      this.drawLeaderBoard();
       this.isGameStarted = false;
     }
   }
@@ -163,8 +162,21 @@ class Game {
     }
 
     if (this.score > lowestScore) {
-      this.saveHighScore(this.score, highScores);
-      this.showHighScores();
+      setTimeout(() => {
+        this.saveHighScore(this.score, highScores);
+
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.drawBackground();
+        this.drawLine();
+        this.drawScores();
+        this.drawLeaderBoard();
+        this.player.draw();
+        this.obstaclesArray.forEach((obstacle) => {
+          obstacle.drawObstacle();
+        });
+        this.drawGameOver();
+        
+      }, 100);
     }
   }
   saveHighScore(score, highScores) {
@@ -185,16 +197,6 @@ class Game {
     // 4. Save to local storage
     localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
   }
-  showHighScores() {
-    const NO_OF_HIGH_SCORES = 10;
-    const HIGH_SCORES = "highScores";
-    const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES));
-    const highScoreList = document.getElementById("highScores");
-
-    highScoreList.innerHTML = highScores
-      .map((score) => `<li>${score.score} - ${score.name}`)
-      .join("");
-  }
 
   drawLeaderBoard() {
     const NO_OF_HIGH_SCORES = 10;
@@ -209,7 +211,7 @@ class Game {
       highScores.forEach((element, i) => {
         highScoreString += `${element.name}:${element.score} \n `;
         this.ctx.fillText(
-          `${element.name}:${element.score}`,
+          `${element.name || "Anonymous"}:${element.score}`,
           925,
           133 + i * 25
         );
