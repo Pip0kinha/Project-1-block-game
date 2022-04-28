@@ -8,25 +8,45 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-      <section id="game-section"> 
-    <h1>Q u a d r a d i n h o s</h1>
-    <canvas
-      id="canvas"
-      width="1200"
-      height="600"
-      style="border: 2px solid grey">
-    </canvas>
-    <div class="button-div">
+    <section id="game-section">
+      <h1>Q u a d r a d i n h o s</h1>
+      <canvas
+        id="canvas"
+        width="1200"
+        height="600"
+        style="border: 2px solid grey"
+      >
+      </canvas>
+      <div class="button-div">
         <button id="start-button" class="button-30" role="button">
           Start Game
         </button>
-      
+
+        <!-- mute -->
+
+        <input type="checkbox" name="un-mute" id="un-mute" />
+        <label for="un-mute" class="unmute">
+          <img
+            src="docs/assets/imgs/click-to-mute.jpg"
+            alt="Mute_Icon.svg"
+            title="Mute icon"
+          />
+        </label>
+        <label for="un-mute" class="mute">
+          <img
+            src="docs/assets/imgs/click-to-play.jpg"
+            alt="Speaker_Icon.svg"
+            title="Unmute/speaker icon"
+          />
+        </label>
+
+        <!--  end of mute -->
       </div>
       <div class="div-leaderboard">
         <h2>**LEADERBOARD**</h2>
         <ol id="highScores"></ol>
       </div>
-</section>
+    </section>
 
     <script type="text/javascript" src="obstacles.js"></script>
     <script type="text/javascript" src="controls.js"></script>

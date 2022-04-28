@@ -17,13 +17,15 @@ class Game {
       this.img = img;
     });
     img.src = "docs/assets/imgs/game_over.jpg";
-    this.newObsSound = new Audio("docs/assets/sounds/new_obstacle.wav");
+    this.starGameMusic = new Audio("/docs/assets/sounds/background-music.wav");
+    /* this.newObsSound = new Audio("docs/assets/sounds/new_obstacle.wav"); */
   }
 
   start() {
     this.drawLine();
     this.player = new Player(this, 390, 240, 120, 120);
     this.player.draw();
+    this.starGameMusic.play();
     this.controls = new Controls(this);
     this.controls.keyboardEvents();
     this.createRandomObstacle();
@@ -42,7 +44,7 @@ class Game {
     this.player.draw();
     if (this.frames % 300 === 0) {
       this.createRandomObstacle();
-      this.newObsSound.play();
+    /*   this.newObsSound.play(); */
     }
     this.obstaclesArray.forEach((obstacle) => {
       obstacle.x += obstacle.speedX;
@@ -108,6 +110,7 @@ class Game {
     if (crashed) {
       this.stop();
       this.drawGameOver();
+      this.starGameMusic.pause();
       gameOverSound.play();
       this.checkHighScore();
     }
