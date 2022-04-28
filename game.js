@@ -18,7 +18,7 @@ class Game {
       this.img = img;
     });
     img.src = "docs/assets/imgs/game_over.jpg";
-    this.starGameMusic = new Audio("/docs/assets/sounds/background-music.wav");
+    this.starGameMusic = new Audio("docs/assets/sounds/background-music.wav");
     this.starGameMusic.loop = true;
     this.newObsSound = new Audio("docs/assets/sounds/new_obstacle.wav");
   }
