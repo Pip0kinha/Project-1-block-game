@@ -14,18 +14,20 @@ class Player {
   }
 
   moveLeft() {
-    this.x -= 20;
+    this.x -= 15;
   }
 
   moveRight() {
-    this.x += 20;
+    this.x += 15;
   }
   moveUp() {
-    this.y -= 20;
+    this.y -= 15;
+   
   }
   moveDown() {
-    this.y += 20;
-  }
+    this.y += 15;
+    console.log(this.x)/*  780 */
+   }
  left() {
     return this.x;
   }

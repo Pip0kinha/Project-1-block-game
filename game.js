@@ -26,6 +26,7 @@ class Game {
     this.player = new Player(this, 390, 240, 120, 120);
     this.player.draw();
     this.starGameMusic.play();
+    this.drawLeaderBoard() 
     this.controls = new Controls(this);
     this.controls.keyboardEvents();
     this.createRandomObstacle();
@@ -41,6 +42,7 @@ class Game {
     this.drawBackground();
     this.drawLine();
     this.drawScores();
+    this.drawLeaderBoard() 
     this.player.draw();
     if (this.frames % 300 === 0) {
       this.createRandomObstacle();
@@ -113,6 +115,7 @@ class Game {
       this.starGameMusic.pause();
       gameOverSound.play();
       this.checkHighScore();
+      this.drawLeaderBoard()
     }
   }
 
@@ -128,8 +131,8 @@ class Game {
 
   drawLine() {
     this.ctx.beginPath();
-    this.ctx.moveTo(908, 0);
-    this.ctx.lineTo(908, 600);
+    this.ctx.moveTo(900, 0);
+    this.ctx.lineTo(900, 600);
     this.ctx.lineWidth = 2;
     this.ctx.strokeStyle = "grey";
     this.ctx.stroke();
@@ -140,22 +143,10 @@ class Game {
     this.ctx.fillRect(0, 0, 1200, 600);
   }
   drawGameOver() {
-    /*  this.ctx.font = "25x  pixel";
-    this.ctx.fillStyle = "grey";
-    this.ctx.fillText(`Game Over`, 970, 113); */
-
-    /* this.ctx.fillStyle = 'light grey';
-    this.ctx.fillRect(200, 150, 500, 300);
-    this.ctx.font = "250x  pixel";
-    this.ctx.fillStyle = "white";
-    this.ctx.fillText(`Game Over`, 350, 300); */
-    //this.ctx.src = "./docs/assets/imgs/game_over.jpg";
-    /*  const image = new Image();
-    image.src = "./docs/assets/imgs/game_over.jpg"; */
-    this.ctx.drawImage(this.img, 100, 150, 1000, 300);
+    this.ctx.drawImage(this.img, 0, 150, 900, 300);
   }
   checkHighScore() {
-    const NO_OF_HIGH_SCORES = 10;
+    /* const NO_OF_HIGH_SCORES = 10; */
     const HIGH_SCORES = "highScores";
     const highScoreString = localStorage.getItem(HIGH_SCORES);
     let lowestScore = 0;
@@ -198,5 +189,21 @@ class Game {
     highScoreList.innerHTML = highScores
       .map((score) => `<li>${score.score} - ${score.name}`)
       .join("");
+  } 
+
+  drawLeaderBoard() {
+    const NO_OF_HIGH_SCORES = 10;
+    const HIGH_SCORES = "highScores";
+    const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES));
+    const highScoreList = document.getElementById("highScores");
+    let highScoreString = ""
+    this.ctx.font = "20px  pixel";
+    this.ctx.fillStyle = "grey";
+      this.ctx.fillText(`*LEADERBOARD*`, 925, 93);
+    highScores.forEach((element, i) => {
+      highScoreString+= `${element.name}:${element.score} \n `
+      this.ctx.fillText(`${element.name}:${element.score}`, 925, 133+i*25);
+    })
+   
   }
 }
