@@ -1,5 +1,6 @@
 class Game {
   constructor() {
+    this.isGameStarted = false;
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
     this.x = 0;
@@ -18,15 +19,19 @@ class Game {
     });
     img.src = "docs/assets/imgs/game_over.jpg";
     this.starGameMusic = new Audio("/docs/assets/sounds/background-music.wav");
-    /* this.newObsSound = new Audio("docs/assets/sounds/new_obstacle.wav"); */
+    this.starGameMusic.loop = true;
+    this.newObsSound = new Audio("docs/assets/sounds/new_obstacle.wav");
   }
 
   start() {
+    if (this.isGameStarted) return false;
+
+    this.isGameStarted = true;
     this.drawLine();
     this.player = new Player(this, 390, 240, 120, 120);
     this.player.draw();
     this.starGameMusic.play();
-    this.drawLeaderBoard() 
+    this.drawLeaderBoard();
     this.controls = new Controls(this);
     this.controls.keyboardEvents();
     this.createRandomObstacle();
@@ -42,11 +47,11 @@ class Game {
     this.drawBackground();
     this.drawLine();
     this.drawScores();
-    this.drawLeaderBoard() 
+    this.drawLeaderBoard();
     this.player.draw();
     if (this.frames % 300 === 0) {
       this.createRandomObstacle();
-    /*   this.newObsSound.play(); */
+      this.newObsSound.play();
     }
     this.obstaclesArray.forEach((obstacle) => {
       obstacle.x += obstacle.speedX;
@@ -72,7 +77,7 @@ class Game {
   }
   createObstacleTop = () => {
     let randomX = Math.floor(Math.random() * 900);
-    this.obstaclesArray.push(new Obstacles(this, randomX, 0, 30, 30, 3, 3));
+    this.obstaclesArray.push(new Obstacles(this, randomX, 0, 60, 60, 3, 3));
   };
 
   createObstacleBottom = () => {
@@ -82,12 +87,12 @@ class Game {
 
   createObstacleLeft = () => {
     let randomY = Math.floor(Math.random() * 600);
-    this.obstaclesArray.push(new Obstacles(this, 0, randomY, 20, 20, 3, 3));
+    this.obstaclesArray.push(new Obstacles(this, 0, randomY, 60, 60, 3, 3));
   };
 
   createObstacleRight = () => {
-    let randomY = Math.floor(Math.random() * 600);
-    this.obstaclesArray.push(new Obstacles(this, 840, randomY, 80, 80, 3, 3));
+    let randomY = Math.floor(Math.random() * 640);
+    this.obstaclesArray.push(new Obstacles(this, 840, randomY, 60, 60, 3, 3));
   };
 
   createRandomObstacle() {
@@ -113,9 +118,10 @@ class Game {
       this.stop();
       this.drawGameOver();
       this.starGameMusic.pause();
-      gameOverSound.play();
+      /* if (!this.starGameMusic.paused) */ gameOverSound.play();
       this.checkHighScore();
-      this.drawLeaderBoard()
+      this.drawLeaderBoard();
+      this.isGameStarted = false;
     }
   }
 
@@ -146,7 +152,6 @@ class Game {
     this.ctx.drawImage(this.img, 0, 150, 900, 300);
   }
   checkHighScore() {
-    /* const NO_OF_HIGH_SCORES = 10; */
     const HIGH_SCORES = "highScores";
     const highScoreString = localStorage.getItem(HIGH_SCORES);
     let lowestScore = 0;
@@ -189,21 +194,26 @@ class Game {
     highScoreList.innerHTML = highScores
       .map((score) => `<li>${score.score} - ${score.name}`)
       .join("");
-  } 
+  }
 
   drawLeaderBoard() {
     const NO_OF_HIGH_SCORES = 10;
     const HIGH_SCORES = "highScores";
     const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES));
     const highScoreList = document.getElementById("highScores");
-    let highScoreString = ""
+    let highScoreString = "";
     this.ctx.font = "20px  pixel";
     this.ctx.fillStyle = "grey";
-      this.ctx.fillText(`*LEADERBOARD*`, 925, 93);
-    highScores.forEach((element, i) => {
-      highScoreString+= `${element.name}:${element.score} \n `
-      this.ctx.fillText(`${element.name}:${element.score}`, 925, 133+i*25);
-    })
-   
+    this.ctx.fillText(`*LEADERBOARD*`, 925, 93);
+    if (highScores) {
+      highScores.forEach((element, i) => {
+        highScoreString += `${element.name}:${element.score} \n `;
+        this.ctx.fillText(
+          `${element.name}:${element.score}`,
+          925,
+          133 + i * 25
+        );
+      });
+    }
   }
 }

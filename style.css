@@ -66,13 +66,11 @@ h1 {
   text-align: center;
 }
 #start-button {
-  margin-top: 20px;
   align-items: center;
   text-align: center;
+  margin-left: auto;
 }
 body::before {
-  /* background-image: url(/docs/imgs/square_paper_background.webp);
-    filter: grayscale(100%); */
   position: absolute;
   top: 0;
   left: 0;
@@ -84,7 +82,6 @@ body {
   position: relative;
   background-image: url(docs/assets/imgs/square_paper_background.webp);
   background-position: 100%;
-  /* filter: opacity(0.8); */
 }
 
 #canvas {
@@ -113,9 +110,7 @@ h2 {
   padding: 20px;
 }
 
-
 /* MUSIC BUTTON  */
-
 
 input#un-mute {
   display: none;
@@ -131,6 +126,22 @@ input#un-mute:checked ~ .unmute img {
 
 input#un-mute:checked ~ .mute img {
   display: none;
-} 
+}
 
-/* end of mute tutorial */
+.button-div {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.unmute {
+  margin-left: 15px;
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+.mute {
+  margin-right: auto;
+  margin-top: 4px;
+  cursor: pointer;
+}

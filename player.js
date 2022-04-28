@@ -26,7 +26,7 @@ class Player {
   }
   moveDown() {
     this.y += 15;
-    console.log(this.x)/*  780 */
+    console.log(this.x)
    }
  left() {
     return this.x;
